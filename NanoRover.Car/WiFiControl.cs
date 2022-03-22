@@ -7,9 +7,9 @@ namespace NanoRover.Car
 {
     public class WiFiControl
     {
+
         public WiFiControl()
         {
-
         }
 
         public bool Connect() //TODO: Add connection retries if disconnected

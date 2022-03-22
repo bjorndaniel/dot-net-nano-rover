@@ -18,6 +18,9 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
+    <Compile Include="ControlMessageArgs.cs" />
+    <Compile Include="Enumerations.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="MotorControl.cs" />
     <Compile Include="MqttControl.cs" />
     <Compile Include="Program.cs" />

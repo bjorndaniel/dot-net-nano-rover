@@ -7,33 +7,76 @@ namespace NanoRover.Car
 {
     public class MqttControl
     {
-        public MqttControl()
-        {
 
-        }
+        public MqttControl() { }
 
-        public void Connect()
+        public bool Connect()
         {
             Console.WriteLine("Connecting to message broker");
             MqttClient mqtt = new MqttClient("192.168.131.189");
             mqtt.ProtocolVersion = MqttProtocolVersion.Version_5;
-            var ret = mqtt.Connect("nanoTestDevice", true);
+            var ret = mqtt.Connect("Rover", true);
             if (ret != MqttReasonCode.Success)
             {
                 Console.WriteLine($"ERROR connecting: {ret}");
                 mqtt.Disconnect();
-                return;
+                return false;
             }
             mqtt.MqttMsgPublishReceived += MqttMsgPublishReceived;
-            mqtt.Subscribe(new[] { "rover/speed" }, new MqttQoSLevel[] { MqttQoSLevel.AtLeastOnce });
+            mqtt.Subscribe
+                (
+                    new[]
+                    {
+                        "rover/f",
+                        "rover/b",
+                        "rover/s",
+                        "rover/fl",
+                        "rover/fr",
+                        "rover/br",
+                        "rover/bl",
+                    },
+                    new MqttQoSLevel[]
+                    {
+                        MqttQoSLevel.AtMostOnce,
+                        MqttQoSLevel.AtMostOnce,
+                        MqttQoSLevel.AtMostOnce,
+                        MqttQoSLevel.AtMostOnce,
+                        MqttQoSLevel.AtMostOnce,
+                        MqttQoSLevel.AtMostOnce,
+                        MqttQoSLevel.AtMostOnce
+                    }
+            );
             Console.WriteLine("Connected to message broker");
+            return true;
+        }
+
+        public event EventHandler MessageReceived;
+
+        protected virtual void OnMessageReceived(EventArgs e)
+        {
+            var handler = MessageReceived;
+            handler?.Invoke(this, e);
         }
 
         private void MqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)
         {
             Console.WriteLine($"Message received for {e.Topic}");
             var message = Encoding.UTF8.GetString(e.Message, 0, e.Message.Length);
-            Console.WriteLine(message);
+            if (float.TryParse(message, out var value))
+            {
+
+                Console.WriteLine(message);
+                OnMessageReceived(new ControlMessageArgs
+                {
+                    Event = Extensions.FromTopic(e.Topic),
+                    Value = value
+                });
+            }
+            else
+            {
+                Console.WriteLine($"Invalid message {message}");
+            }
+
         }
     }
 }
