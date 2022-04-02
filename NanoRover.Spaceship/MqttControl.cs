@@ -3,7 +3,7 @@ using nanoFramework.M2Mqtt.Messages;
 using System;
 using System.Text;
 
-namespace NanoRover.Car
+namespace NanoRover.Spaceship
 {
     public class MqttControl
     {
@@ -13,7 +13,7 @@ namespace NanoRover.Car
         public bool Connect()
         {
             Console.WriteLine("Connecting to message broker");
-            MqttClient mqtt = new MqttClient("192.168.131.235");
+            MqttClient mqtt = new MqttClient("192.168.9.164");
             mqtt.ProtocolVersion = MqttProtocolVersion.Version_5;
             var ret = mqtt.Connect("Rover", true);
             if (ret != MqttReasonCode.Success)

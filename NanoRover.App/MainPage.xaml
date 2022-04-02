@@ -5,31 +5,50 @@
              BackgroundColor="{DynamicResource SecondaryColor}">
 
     <ScrollView>
-        <Grid RowSpacing="25" RowDefinitions="Auto,Auto,Auto,Auto,*"
+        <Grid RowSpacing="25" RowDefinitions="Auto,Auto,Auto" 
+              ColumnDefinitions="Auto, Auto, Auto"
               Padding="{OnPlatform iOS='30,60,30,30', Default='30'}">
-
             <Button 
                 Text="Forward"
                 FontAttributes="Bold"
                 Grid.Row="0"
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="Button_Clicked"
+                Grid.Column="1"
+                Clicked="ForwardClicked"
                 HorizontalOptions="Center" />
-
+            <Button 
+                Text="Left"
+                FontAttributes="Bold"
+                Grid.Row="1"
+                Grid.Column="0"
+                Clicked="Button_Clicked_2"
+                HorizontalOptions="Center" />
+            <Button 
+                Text="Right"
+                FontAttributes="Bold"
+                Grid.Row="1"
+                Grid.Column="3"
+                Clicked="Button_Clicked_3"
+                HorizontalOptions="Center" />
             <Button 
               Text="Stop"
+                Clicked="StopClicked"
               FontAttributes="Bold"
               Grid.Row="1"
-              SemanticProperties.Hint="Counts the number of times you click"
-              Clicked="Button_Clicked_1"
+              Grid.Column="1"
               HorizontalOptions="Center" />
-
-            <Image Grid.Row="2"
+            <Button 
+  Text="Back"
+    Clicked="BackClicked"
+  FontAttributes="Bold"
+  Grid.Row="2"
+  Grid.Column="1"
+  HorizontalOptions="Center" />
+            <!--<Image Grid.Row="2"
                 Source="dotnet_bot.png"
                 SemanticProperties.Description="Cute dot net bot waving hi to you!"
                 WidthRequest="250"
                 HeightRequest="310"
-                HorizontalOptions="Center" />
+                HorizontalOptions="Center" />-->
 
         </Grid>
     </ScrollView>

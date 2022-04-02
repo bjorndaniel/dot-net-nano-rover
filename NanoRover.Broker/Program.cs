@@ -21,7 +21,6 @@ new MqttServerOptionsBuilder()
 
 using var mqttServer = mqttFactory.CreateMqttServer(mqttServerOptions);
 await mqttServer.StartAsync();
-
 Console.WriteLine("Press Enter to exit.");
 Console.ReadLine();
 
